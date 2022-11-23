@@ -3,18 +3,7 @@ import { Link } from 'react-router-dom';
 
 const NavMenu = () => {
     const menu = <>
-        <li><Link>Item 1</Link></li>
-        <li tabIndex={0}>
-            <Link className="justify-between">
-                Parent
-                <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-            </Link>
-            <ul className="p-2">
-                <li><Link>Submenu 1</Link></li>
-                <li><Link>Submenu 2</Link></li>
-            </ul>
-        </li>
-        <li><Link>Item 3</Link></li>
+        <li><Link to='/'>Home</Link></li>
     </>
     return (
         <div className="navbar bg-base-100">
@@ -27,15 +16,12 @@ const NavMenu = () => {
                         {menu}
                     </ul>
                 </div>
-                <Link className="btn btn-ghost normal-case text-xl">daisyUI</Link>
+                <Link to='/' className="btn btn-ghost normal-case text-xl">Bike In Need</Link>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
                     {menu}
                 </ul>
-            </div>
-            <div className="navbar-end">
-                <Link className="btn">Get started</Link>
             </div>
         </div>
     );
