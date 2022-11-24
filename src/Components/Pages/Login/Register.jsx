@@ -1,21 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const Register = () => {
     return (
         <div className='container mx-auto my-5 md:my-10 lg:my-15'>
             <div className="w-full max-w-md mx-auto p-8 space-y-3 rounded-xl bg-gray-900 text-gray-100">
-                <h1 className="text-2xl font-bold text-center">Login</h1>
+                <h1 className="text-2xl font-bold text-center">Register</h1>
                 <form className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
+                        <label className="block">Your Name</label>
+                        <input type="name" name="name" placeholder="Your Name" className="w-full px-4 py-3 rounded-md text-black" />
+                    </div>
+                    <div className="space-y-1 text-sm">
                         <label className="block">User Email</label>
-                        <input type="email" name="username" placeholder="User Email" className="w-full px-4 py-3 rounded-md text-black" />
+                        <input type="email" name="email" placeholder="User Email" className="w-full px-4 py-3 rounded-md text-black" />
                     </div>
                     <div className="space-y-1 text-sm">
                         <label className="label">
                             <span className="label-text text-white">Choose your Option</span>
                         </label>
-                        <select className="select select-bordered text-black w-full">
+                        <select name='option' className="select select-bordered text-black w-full">
                             <option>Bayer</option>
                             <option>Seller</option>
                         </select>
@@ -28,7 +32,7 @@ const Login = () => {
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
                     <div className="flex-1 h-px sm:w-16"></div>
-                    <p className="px-3 text-sm">Login with social accounts</p>
+                    <p className="px-3 text-sm">Register with social accounts</p>
                     <div className="flex-1 h-px sm:w-16"></div>
                 </div>
                 <div className="flex justify-center space-x-4">
@@ -38,12 +42,12 @@ const Login = () => {
                         </svg>
                     </button>
                 </div>
-                <p className="text-xs text-center sm:px-6">Don't have an account?
-                    <Link rel="noopener noreferrer" to='/register' className="underline"> Sign up</Link>
+                <p className="text-xs text-center sm:px-6">Already have an account?
+                    <Link rel="noopener noreferrer" to='/login' className="underline"> Log In</Link>
                 </p>
             </div>
         </div>
     );
 };
 
-export default Login;
+export default Register;
