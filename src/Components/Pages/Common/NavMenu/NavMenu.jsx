@@ -6,7 +6,7 @@ const NavMenu = () => {
         <li><Link to='/'>Home</Link></li>
     </>
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 container mx-auto">
             <div className="navbar-start">
                 <div className="dropdown">
                     <label tabIndex={0} className="btn btn-ghost lg:hidden">
