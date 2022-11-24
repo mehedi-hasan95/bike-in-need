@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { createContext, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
+import React, { createContext, useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from '../Firebase/Firebase.init';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,8 +28,36 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, userInfo)
     }
 
+    // User Login
+    const logIn = (email, password) => {
+        setLoading(true);
+        return signInWithEmailAndPassword(auth, email, password)
+    }
+
+    // Google Login
+    const googleLogin = (provider) => {
+        setLoading(true);
+        return signInWithPopup(auth, provider)
+    }
+
+    // Sign Out
+    const logOut = () => {
+        setLoading(true);
+        return signOut(auth);
+    }
+
+    // state observer 
+
+    useEffect(() => {
+        const usSubscribed = onAuthStateChanged(auth, currentUser => {
+            setUser(currentUser);
+            setLoading(false);
+        })
+        return () => usSubscribed();
+    }, [])
+
     const authInfo = {
-        createUser, updateUser
+        createUser, updateUser, logIn, googleLogin, logOut, user
     }
     return (
         <QueryClientProvider client={queryClient}>
