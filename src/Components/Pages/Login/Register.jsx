@@ -1,33 +1,67 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Register = () => {
+    const { createUser, updateUser } = useContext(AuthContext);
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [error, setError] = useState(null);
+
+    const onSubmit = data => {
+        setError('')
+        createUser(data.email, data.password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+
+                    }).catch((error) => {
+                        // An error occurred
+                        // ...
+                    });
+                toast.success("Sucessfully create user", { autoClose: 500 });
+            })
+            .catch((error) => {
+                const errorMessage = error.message;
+                setError(errorMessage);
+            });
+    }
     return (
         <div className='container mx-auto my-5 md:my-10 lg:my-15'>
             <div className="w-full max-w-md mx-auto p-8 space-y-3 rounded-xl bg-gray-900 text-gray-100">
                 <h1 className="text-2xl font-bold text-center">Register</h1>
-                <form className="space-y-6 ng-untouched ng-pristine ng-valid">
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label className="block">Your Name</label>
-                        <input type="name" name="name" placeholder="Your Name" className="w-full px-4 py-3 rounded-md text-black" />
+                        <input {...register("name", { required: "Name is Required", })} type="name" name="name" placeholder="Your Name" className="w-full px-4 py-3 rounded-md text-black" />
                     </div>
+                    {errors.name && <p className='text-red-500' role="alert">{errors.name?.message}</p>}
                     <div className="space-y-1 text-sm">
                         <label className="block">User Email</label>
-                        <input type="email" name="email" placeholder="User Email" className="w-full px-4 py-3 rounded-md text-black" />
+                        <input {...register("email", { required: "Email is Required" })} type="email" name="email" placeholder="User Email" className="w-full px-4 py-3 rounded-md text-black" />
                     </div>
+                    {errors.email && <p className='text-red-500' role="alert">{errors.email?.message}</p>}
                     <div className="space-y-1 text-sm">
                         <label className="label">
                             <span className="label-text text-white">Choose your Option</span>
                         </label>
-                        <select name='option' className="select select-bordered text-black w-full">
+                        <select {...register("option")} name='option' className="select select-bordered text-black w-full">
                             <option>Bayer</option>
                             <option>Seller</option>
                         </select>
                     </div>
                     <div className="space-y-1 text-sm">
                         <label className="block">Password</label>
-                        <input type="password" name="password" placeholder="Password" className="w-full px-4 py-3 rounded-md text-black" />
+                        <input {...register("password", { required: "Password is Required" })} type="password" name="password" placeholder="Password" className="w-full px-4 py-3 rounded-md text-black" />
                     </div>
+                    {errors.password && <p className='text-red-500' role="alert">{errors.password?.message}</p>}
+                    {error && <p className='text-red-500'>{error}</p>}
                     <button className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400">Sign in</button>
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
