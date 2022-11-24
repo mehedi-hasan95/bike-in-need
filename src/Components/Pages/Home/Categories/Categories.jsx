@@ -11,13 +11,12 @@ const Categories = () => {
             return data;
         }
     })
-    console.log();
     return (
         <div className='container mx-auto'>
             <h2 className='text-center text-3xl font-bold mb-10'>All Categories</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
             {
-                categories.map(cat => <Category key={cat._id} cat={cat}></Category>)
+                categories?.map(cat => <Category key={cat._id} cat={cat}></Category>)
             }
             </div>
         </div>

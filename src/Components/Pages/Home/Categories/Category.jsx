@@ -9,7 +9,7 @@ const Category = ({cat}) => {
                 <h2 className="card-title">{cat.name}</h2>
                 <p>{cat.desc}</p>
                 <div className="card-actions justify-end">
-                    <Link to={`http://localhost:5000/categories/${cat.category}`} className="btn btn-primary">View More</Link>
+                    <Link to={`/categories/${cat.category}`} className="btn btn-primary">View More</Link>
                 </div>
             </div>
         </div>
