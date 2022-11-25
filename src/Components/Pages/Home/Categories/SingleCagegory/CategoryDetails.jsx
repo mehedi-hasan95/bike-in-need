@@ -1,7 +1,7 @@
 import React from 'react';
 
 const CategoryDetails = ({ details, setBooking }) => {
-    const { buy, date, desc, img, location, name, sale, used, title } = details;
+    const { buy, date, img, location, name, sale, used, title } = details;
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
             <figure><img src={img} alt="Shoes" /></figure>
