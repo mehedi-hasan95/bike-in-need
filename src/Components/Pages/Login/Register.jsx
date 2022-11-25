@@ -10,6 +10,8 @@ const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState(null);
 
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+
     const onSubmit = data => {
         setError('')
         createUser(data.email, data.password)
@@ -21,8 +23,9 @@ const Register = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-
-                    }).catch((error) => {
+                        sendUser(data.name, data.email, data.option);
+                    })
+                    .catch((error) => {
                         // An error occurred
                         // ...
                     });
@@ -32,6 +35,25 @@ const Register = () => {
                 const errorMessage = error.message;
                 setError(errorMessage);
             });
+    }
+
+    // Send datA to the DB
+    const sendUser = (name, email, status) => {
+        const user = {name, email, status};
+        fetch('http://localhost:5000/users', {
+        method: 'POST', // or 'PUT'
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(user),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            setCreatedUserEmail(email);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
     }
 
     // Login with google 
