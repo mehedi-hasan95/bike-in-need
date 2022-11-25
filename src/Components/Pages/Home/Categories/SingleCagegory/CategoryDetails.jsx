@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CategoryDetails = ({ details }) => {
+const CategoryDetails = ({ details, setBooking }) => {
     const { buy, date, desc, img, location, name, sale, used, title } = details;
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -21,7 +21,7 @@ const CategoryDetails = ({ details }) => {
                 <h3 className='text-lg'>Seller Location: {location}</h3>
                 <h3 className='text-lg'>Published Date: {date}</h3>
             </div>
-            <label htmlFor='open-modal' className='text-xl btn btn-primary'>Book Now</label>
+            <label onClick={() =>setBooking(details) } htmlFor='open-modal' className='text-xl btn btn-primary'>Book Now</label>
         </div>
     );
 };

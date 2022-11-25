@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Category = ({cat}) => {
+const Category = ({cat}) => { 
     return (
         <div className="card w-96 bg-base-100 shadow-xl image-full">
             <figure><img src={cat.img} alt="Shoes" /></figure>
