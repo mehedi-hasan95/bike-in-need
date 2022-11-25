@@ -6,6 +6,7 @@ import SingleCategory from "../Pages/Home/Categories/SingleCagegory/SingleCatego
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Login/Register";
+import PrivetRouter from "./PrivetRouter";
 
 const router = createBrowserRouter([
     {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
       children: [
         {path: '/', element: <Home></Home>},
         {path: 'dashboard', element: <Dashboard></Dashboard>},
-        {path: 'categories/:category', element: <SingleCategory></SingleCategory>,
+        {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,
         loader: ({params}) => fetch(`http://localhost:5000/categories/${params.category}`)
       },
         {path: 'login', element: <Login></Login>},
