@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import Lodding from '../../../Common/Lodding/Lodding';
+import ConfirmModal from '../../../Modal/ConfirmModal';
 import Seller from './Seller';
 
 const Sellers = () => {
+    const [confirmModal, setConfrimModal] = useState(null);
     const { data: sellers, isLoading } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
@@ -29,9 +31,17 @@ const Sellers = () => {
                 </thead>
                 <tbody>
                     {
-                        sellers.map((slr, idx) => <Seller key={slr._id} slr={slr} idx={idx}></Seller>)
+                        sellers.map((slr, idx) => <Seller key={slr._id} setConfrimModal={setConfrimModal} slr={slr} idx={idx}></Seller>)
                     }
                 </tbody>
+                {
+                    confirmModal && <ConfirmModal
+                    hedding={`Do You want to Verified ${confirmModal.name}`}
+                    email = {confirmModal.email}
+                    sucessBtn = {`Yes`}
+                    denyBtn = {`Cancle`}
+                    ></ConfirmModal>
+                }
             </table>
         </div>
     );
