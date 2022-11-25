@@ -14,7 +14,7 @@ const router = createBrowserRouter([
       element: <Main></Main>,
       children: [
         {path: '/', element: <Home></Home>},
-        {path: 'dashboard', element: <Dashboard></Dashboard>},
+        {path: 'dashboard', element: <PrivetRouter><Dashboard></Dashboard></PrivetRouter>},
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,
         loader: ({params}) => fetch(`http://localhost:5000/categories/${params.category}`)
       },

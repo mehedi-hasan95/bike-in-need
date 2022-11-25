@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import Category from './Category';
+import Lodding from '../../Common/Lodding/Lodding';
 
 const Categories = () => {
     const { data: categories, isLoading } = useQuery({
@@ -11,6 +12,10 @@ const Categories = () => {
             return data;
         }
     })
+
+    if(isLoading){
+        return <Lodding></Lodding>
+    }
     return (
         <div className='container mx-auto'>
             <h2 className='text-center text-3xl font-bold mb-10'>All Categories</h2>
