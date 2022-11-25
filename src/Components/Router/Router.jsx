@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import Buyers from "../Pages/Dashboard/Admin/buyer/Buyers";
 import Sellers from "../Pages/Dashboard/Admin/Seller/Sellers";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Error from "../Pages/Error/Error";
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
         {path: '/', element: <Home></Home>},
         {path: 'dashboard', element: <PrivetRouter><Dashboard></Dashboard></PrivetRouter>,
       children: [
-        {path: '/dashboard', element: <Sellers></Sellers>}
+        {path: '/dashboard/admin/seller', element: <Sellers></Sellers>},
+        {path: '/dashboard/admin/buyer', element: <Buyers></Buyers>},
       ]
       },
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,
