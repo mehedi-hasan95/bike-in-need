@@ -6,13 +6,14 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Login = () => {
 
+    const { logIn, googleLogin } = useContext(AuthContext);
+    const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || "/";
 
 
-    const { logIn, googleLogin } = useContext(AuthContext);
-    const { register, formState: { errors }, handleSubmit } = useForm();
+   
 
 
     const onSubmit = data => {

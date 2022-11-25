@@ -10,14 +10,17 @@ const Dashboard = () => {
     const [isSeller] = useSeller(user.email);
     return (
         <div className="drawer drawer-mobile container mx-auto">
-            {/* <input id="my-drawer-2" type="checkbox" className="drawer-toggle" /> */}
-            
-            <Outlet></Outlet>
+            <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col">
+                <Outlet></Outlet>
+                <label htmlFor="my-drawer-2" className="btn btn-primary drawer-button lg:hidden">Open drawer</label>
+
+            </div>
             <div className="drawer-side">
-                {/* <label htmlFor="my-drawer-2" className="drawer-overlay"></label> */}
+                <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 text-base-content">
                     {isAdmin && <>
-                        <li><Link>All Sellers</Link></li>
+                        <li><Link to='/dashboard'>All Sellers</Link></li>
                         <li><Link>All Buyers</Link></li>
                     </>
                     }

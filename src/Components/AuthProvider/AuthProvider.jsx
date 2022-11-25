@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     const authInfo = {
-        createUser, updateUser, logIn, googleLogin, logOut, user
+        createUser, updateUser, logIn, googleLogin, logOut, user, loading
     }
     return (
         <QueryClientProvider client={queryClient}>

@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import Sellers from "../Pages/Dashboard/Admin/Seller/Sellers";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import Error from "../Pages/Error/Error";
 import SingleCategory from "../Pages/Home/Categories/SingleCagegory/SingleCategory";
@@ -14,7 +15,11 @@ const router = createBrowserRouter([
       element: <Main></Main>,
       children: [
         {path: '/', element: <Home></Home>},
-        {path: 'dashboard', element: <PrivetRouter><Dashboard></Dashboard></PrivetRouter>},
+        {path: 'dashboard', element: <PrivetRouter><Dashboard></Dashboard></PrivetRouter>,
+      children: [
+        {path: '/dashboard', element: <Sellers></Sellers>}
+      ]
+      },
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,
         loader: ({params}) => fetch(`http://localhost:5000/categories/${params.category}`)
       },
