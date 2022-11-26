@@ -30,7 +30,7 @@ const Dashboard = () => {
                     {
                         isSeller && <>
                             <li><Link to='/dashboard/seller/add'>Add A product</Link></li>
-                            <li><Link>My Products</Link></li>
+                            <li><Link to='/dashboard/seller/myproduct'>My Products</Link></li>
                         </>
                     }
                     {/* For Buyers */}

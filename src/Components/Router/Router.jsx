@@ -4,6 +4,7 @@ import Buyers from "../Pages/Dashboard/Admin/buyer/Buyers";
 import Sellers from "../Pages/Dashboard/Admin/Seller/Sellers";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import AddProduct from "../Pages/Dashboard/Seller/AddProduct/AddProduct";
+import SellerProduct from "../Pages/Dashboard/Seller/SellerProduct/SellerProduct";
 import Error from "../Pages/Error/Error";
 import SingleCategory from "../Pages/Home/Categories/SingleCagegory/SingleCategory";
 import Home from "../Pages/Home/Home/Home";
@@ -21,7 +22,8 @@ const router = createBrowserRouter([
       children: [
         {path: '/dashboard/admin/seller', element: <Sellers></Sellers>},
         {path: '/dashboard/admin/buyer', element: <Buyers></Buyers>},
-        {path: '/dashboard/seller/add', element: <AddProduct></AddProduct>}
+        {path: '/dashboard/seller/add', element: <AddProduct></AddProduct>},
+        {path: '/dashboard/seller/myproduct', element: <SellerProduct></SellerProduct>}
       ]
       },
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,

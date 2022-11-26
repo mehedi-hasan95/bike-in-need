@@ -55,7 +55,7 @@ const AddProduct = () => {
                         .then((data) => {
                             if(data.acknowledged) {
                                 toast.success('You have sucessfully add your product');
-                                navigate('/');
+                                navigate('/dashboard/seller/myproduct');
                             }
                         })
                 }
