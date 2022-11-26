@@ -66,7 +66,7 @@ const Buyers = () => {
                     message={`If you want to remove ${deleteUser.name}, please confirm Delete`}
                     successModal="Delete"
                     closeModal={closeModal}
-                    doctorData={deleteUser}
+                    userData={deleteUser}
                     confirmDelete={confirmDelete}
                 ></ConformationModal>
             }

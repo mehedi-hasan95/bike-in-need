@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SellerPdDetails = ({ details, setDeleteUser }) => {
+const SellerPdDetails = ({ details, setDeleteUser, setUpdateUser }) => {
     const { buy, date, img, location, name, sale, used, title, parcech } = details;
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
@@ -22,6 +22,7 @@ const SellerPdDetails = ({ details, setDeleteUser }) => {
                 <h3 className='text-lg'>Published Date: {date}</h3>
                 <h3 className='text-lg'>Purchase Year: {parcech}</h3>
                 <label onClick={() => setDeleteUser(details)} htmlFor="conform-modal" className='btn btn-primary'>Delete</label>
+                <label onClick={() => setUpdateUser(details)} htmlFor="conform-modal" className='btn btn-primary'>Advertise</label>
             </div>
 
         </div>

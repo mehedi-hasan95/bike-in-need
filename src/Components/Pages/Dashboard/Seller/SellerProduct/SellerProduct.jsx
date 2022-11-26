@@ -12,6 +12,7 @@ const SellerProduct = () => {
     const closeModal = () => {
         setDeleteUser(null);
     }
+
     const confirmDelete = seller => {
         fetch(`http://localhost:5000/seller/${seller._id}`, {
             method: 'DELETE', // or 'PUT'
@@ -56,10 +57,12 @@ const SellerProduct = () => {
                     message={`If you want to remove ${deleteUser.name}, please confirm Delete`}
                     successModal="Delete"
                     closeModal={closeModal}
-                    doctorData={deleteUser}
+                    userData={deleteUser}
                     confirmDelete={confirmDelete}
                 ></ConformationModal>
             }
+
+            
         </div>
     );
 };
