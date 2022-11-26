@@ -17,6 +17,7 @@ const Seller = ({ slr, idx, setConfrimModal }) => {
                     slr.verified && <button className=' bg-secondery-50 px-3 py-1 rounded-md font-semibold' disabled>Verified</button>
                 }
             </td>
+            <td><button className='btn btn-primary'>Delete</button></td>
         </tr>
     );
 };
