@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Lodding from '../../../Common/Lodding/Lodding';
+import ConformationModal from '../../../Modal/ConformationModal';
 import Buyer from './Buyer';
 
 const Buyers = () => {
-    const { data: buyers, isLoading } = useQuery({
+    const { data: buyers, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/users/buyer`);
@@ -12,6 +14,30 @@ const Buyers = () => {
             return data;
         }
     })
+
+    // Delete a seller 
+
+    const [deleteUser, setDeleteUser] = useState(null);
+    const closeModal = () => {
+        setDeleteUser(null);
+    }
+    const confirmDelete = buyer => {
+        fetch(`http://localhost:5000/users/${buyer._id}`, {
+            method: 'DELETE', // or 'PUT'
+            headers: {
+                authorization: `bearar ${localStorage.getItem('appointmentToken')}`
+            }
+        })
+
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast.success(`You have sucessfully delete ${buyer.name}`);
+                    refetch();
+                }
+            })
+    }
+
     if (isLoading) {
         return <Lodding></Lodding>
     }
@@ -24,14 +50,26 @@ const Buyers = () => {
                         <th>Name</th>
                         <th>Type</th>
                         <th>Email</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        buyers.map((slr, idx) => <Buyer key={slr._id} slr={slr} idx={idx}></Buyer>)
+                        buyers.map((slr, idx) => <Buyer key={slr._id} setDeleteUser={setDeleteUser} slr={slr} idx={idx}></Buyer>)
                     }
                 </tbody>
             </table>
+            {/* Delete User  */}
+            {
+                deleteUser && <ConformationModal
+                    title={'Do you want to delete the user?'}
+                    message={`If you want to remove ${deleteUser.name}, please confirm Delete`}
+                    successModal="Delete"
+                    closeModal={closeModal}
+                    doctorData={deleteUser}
+                    confirmDelete={confirmDelete}
+                ></ConformationModal>
+            }
         </div>
     );
 };

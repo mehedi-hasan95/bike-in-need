@@ -39,9 +39,6 @@ const Sellers = () => {
             })
     }
 
-
-
-
     if (isLoading) {
         return <Lodding></Lodding>
     }
@@ -72,12 +69,7 @@ const Sellers = () => {
                     ></ConfirmModal>
                 }
             </table>
-
-
-
-
-
-
+            {/* Delete User  */}
             {
                 deleteUser && <ConformationModal
                     title={'Do you want to delete the user?'}
@@ -88,11 +80,6 @@ const Sellers = () => {
                     confirmDelete={confirmDelete}
                 ></ConformationModal>
             }
-
-
-
-
-
 
         </div>
     );
