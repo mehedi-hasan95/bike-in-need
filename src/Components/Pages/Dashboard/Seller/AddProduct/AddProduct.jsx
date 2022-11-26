@@ -1,14 +1,72 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../../../../AuthProvider/AuthProvider';
 
 const AddProduct = () => {
+    const {user} = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+    
+    const navigate = useNavigate();
+    const uploadImage = process.env.REACT_APP_image_host;
+
+
     const onSubmit = data => {
-        console.log(data);
+        const img = data.img[0];
+        console.log(img);
+        const formData = new FormData();
+        formData.append('image', img);
+        const url = `https://api.imgbb.com/1/upload?key=${uploadImage}`;
+        console.log(url);
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(res => res.json())
+            .then(imgData => {
+                if (imgData.success) {
+                    const products = {
+                        title: data.title,
+                        category: data.category,
+                        buy: data.buy,
+                        sale:data.sale,
+                        condition: data.condition,
+                        parcech: data.date,
+                        location: data.location,
+                        number: data.number,
+                        used: data.used,
+                        desc: data.desc,
+                        date,
+                        seller: user.email,
+                        img: imgData.data.url
+                    }
+                    fetch('http://localhost:5000/products/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            authorization: `bearer ${localStorage.getItem('appointmentToken')}`
+                        },
+                        body: JSON.stringify(products),
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if(data.acknowledged) {
+                                toast.success('You have sucessfully add your product');
+                                navigate('/');
+                            }
+                        })
+                }
+            })
     }
+
+
+    
     return (
         <div className='container mx-auto'>
-            
+
             <section className="p-6 bg-gray-800 text-gray-50">
                 <form onSubmit={handleSubmit(onSubmit)} className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid">
                     <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
@@ -19,7 +77,7 @@ const AddProduct = () => {
                             </div>
                             <div className="col-span-full sm:col-span-3">
                                 <label className="block">Mobile Number</label>
-                                <input {...register("number", { required: "Number is Required" })} type="text" name="number" placeholder="Product Price" className="w-full px-4 py-3 rounded-md text-black" />
+                                <input {...register("number", { required: "Number is Required" })} type="text" name="number" placeholder="Mobile Number" className="w-full px-4 py-3 rounded-md text-black" />
                             </div>
                             <div className="col-span-full sm:col-span-3">
                                 <label className="label">
@@ -66,7 +124,7 @@ const AddProduct = () => {
                                 <textarea {...register("desc", { required: "Description is Required" })} name="desc" className='w-full text-black p-5' rows="5"></textarea>
                             </div>
                             <div className="col-span-full">
-                                <label for="files" className="block text-sm font-medium">Attachments</label>
+                                <label className="block text-sm font-medium">Attachments</label>
                                 <div className="flex">
                                     <input {...register("img", { required: "Image is Required" })} type="file" name="img" className="px-8 py-12 border-2 border-dashed rounded-md dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" />
                                 </div>
