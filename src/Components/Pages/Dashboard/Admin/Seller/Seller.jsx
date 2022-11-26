@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Seller = ({ slr, idx, setConfrimModal }) => {
+const Seller = ({ slr, idx, setConfrimModal, setDeleteUser }) => {
     const { name, email } = slr;
     
     return (
@@ -17,7 +17,7 @@ const Seller = ({ slr, idx, setConfrimModal }) => {
                     slr.verified && <button className=' bg-secondery-50 px-3 py-1 rounded-md font-semibold' disabled>Verified</button>
                 }
             </td>
-            <td><button className='btn btn-primary'>Delete</button></td>
+            <td><label onClick={() => setDeleteUser(slr)} htmlFor="conform-modal" className='btn btn-primary'>Delete</label></td>
         </tr>
     );
 };
