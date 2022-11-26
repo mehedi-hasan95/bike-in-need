@@ -1,16 +1,23 @@
 import { GoogleAuthProvider } from 'firebase/auth';
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
+import useToken from '../../Hooks/useToken';
 
 const Register = () => {
     const { createUser, updateUser, googleLogin } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState(null);
-
     const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail);
+    const navigate = useNavigate();
+
+    // Implement JWT
+    if(token) {
+        navigate('/');
+    }
 
     const onSubmit = data => {
         setError('')
