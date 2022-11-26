@@ -24,22 +24,32 @@ const SellerProduct = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    toast.success(`You have sucessfully delete ${seller.name}`);
+                    toast.success(`You have sucessfully delete ${seller.name}`);                   
                 }
             })
     }
 
+    // Delete User
+    const [updateUser, setUpdateUser] = useState(null);
+    const updateModal = () => {
+        setUpdateUser(null);
+    }
+
+    const confirmUpdate = id => {
+        console.log(id);
+    }
 
 
-    const {user} = useContext(AuthContext);
+
+    const { user } = useContext(AuthContext);
     const [sellerProducts, setSellerProducts] = useState([]);
-    useEffect( () => {
+    useEffect(() => {
         async function products() {
             const allProduct = await axios.get(`http://localhost:5000/seller/products?email=${user.email}`)
             setSellerProducts(allProduct.data)
         }
         products()
-    },[user.email])
+    }, [user.email])
 
 
     return (
@@ -47,7 +57,7 @@ const SellerProduct = () => {
             <h2 className='text-2xl mb-7'>{user?.displayName}, you have total {sellerProducts.length} products</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 g-5'>
                 {
-                    sellerProducts?.map(dtls => <SellerPdDetails key={dtls._id} setDeleteUser={setDeleteUser} details={dtls} ></SellerPdDetails>)
+                    sellerProducts?.map(dtls => <SellerPdDetails key={dtls._id} setUpdateUser={setUpdateUser} setDeleteUser={setDeleteUser} details={dtls} ></SellerPdDetails>)
                 }
             </div>
             {/* Delete User  */}
@@ -62,7 +72,19 @@ const SellerProduct = () => {
                 ></ConformationModal>
             }
 
-            
+
+            {/* Delete User  */}
+            {
+                updateUser && <ConformationModal
+                    title={'Do you want to Update the user?'}
+                    message={`If you want to Update ${updateUser.name}, please confirm`}
+                    successModal="Update"
+                    closeModal={updateModal}
+                    userData={updateUser}
+                    confirmDelete={confirmUpdate}
+                ></ConformationModal>
+            }
+
         </div>
     );
 };

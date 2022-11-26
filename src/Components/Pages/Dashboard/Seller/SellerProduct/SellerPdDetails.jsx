@@ -2,6 +2,7 @@ import React from 'react';
 
 const SellerPdDetails = ({ details, setDeleteUser, setUpdateUser }) => {
     const { buy, date, img, location, name, sale, used, title, parcech } = details;
+    console.log(details);
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
             <figure><img src={img} alt="Shoes" /></figure>
