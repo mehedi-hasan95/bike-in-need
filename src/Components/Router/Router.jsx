@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import Buyers from "../Pages/Dashboard/Admin/buyer/Buyers";
+import Purchase from "../Pages/Dashboard/Admin/buyer/Purchase/Purchase";
 import Sellers from "../Pages/Dashboard/Admin/Seller/Sellers";
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import AddProduct from "../Pages/Dashboard/Seller/AddProduct/AddProduct";
@@ -23,7 +24,8 @@ const router = createBrowserRouter([
         {path: '/dashboard/admin/seller', element: <Sellers></Sellers>},
         {path: '/dashboard/admin/buyer', element: <Buyers></Buyers>},
         {path: '/dashboard/seller/add', element: <AddProduct></AddProduct>},
-        {path: '/dashboard/seller/myproduct', element: <SellerProduct></SellerProduct>}
+        {path: '/dashboard/seller/myproduct', element: <SellerProduct></SellerProduct>},
+        {path: '/dashboard/purchase', element: <Purchase></Purchase>}
       ]
       },
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,

@@ -48,7 +48,7 @@ const SellerProduct = () => {
 
     const confirmUpdate = seller => {
         fetch(`http://localhost:5000/seller/${seller._id}`, {
-            method: 'PUT', // or 'PUT'
+            method: 'PATCH', // or 'PUT'
             headers: {
                 authorization: `bearar ${localStorage.getItem('appointmentToken')}`
             }

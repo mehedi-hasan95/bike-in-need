@@ -36,7 +36,7 @@ const Dashboard = () => {
                     {/* For Buyers */}
                     {
                         !isAdmin && !isSeller && <>
-                            <li><Link>My orders</Link></li>
+                            <li><Link to='/dashboard/purchase'>My orders</Link></li>
                         </>
                     }
                 </ul>

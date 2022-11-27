@@ -4,7 +4,7 @@ import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const BookingModal = ({ treatment, setBookNow,   }) => {
     const {user} = useContext(AuthContext);
-    const { title, sale, _id } = treatment;
+    const { title, sale, _id, img } = treatment;
     console.log(treatment);
 
 
@@ -20,6 +20,7 @@ const BookingModal = ({ treatment, setBookNow,   }) => {
             seller: treatment.name,
             phone, email,
             sale,
+            img,
             service_id : _id,
         }
         console.log(booking);
@@ -36,12 +37,12 @@ const BookingModal = ({ treatment, setBookNow,   }) => {
             .then((data) => {
                 
                 if(data.acknowledged) {
-                    toast.success("You have successfully book your spot");
+                    toast.success("You have successfully book your this product");
                     setBookNow(null);
                 }
                 else {
                     setBookNow(null);
-                    toast.error(data.message, {autoClose: 1000})
+                    toast.error(data.message)
                 }
             })
             .catch((error) => {
