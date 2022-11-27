@@ -4,6 +4,7 @@ import Buyers from "../Pages/Dashboard/Admin/buyer/Buyers";
 import Purchase from "../Pages/Dashboard/Admin/buyer/Purchase/Purchase";
 import Sellers from "../Pages/Dashboard/Admin/Seller/Sellers";
 import Dashboard from "../Pages/Dashboard/Dashboard";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 import AddProduct from "../Pages/Dashboard/Seller/AddProduct/AddProduct";
 import SellerProduct from "../Pages/Dashboard/Seller/SellerProduct/SellerProduct";
 import Error from "../Pages/Error/Error";
@@ -25,7 +26,10 @@ const router = createBrowserRouter([
         {path: '/dashboard/admin/buyer', element: <Buyers></Buyers>},
         {path: '/dashboard/seller/add', element: <AddProduct></AddProduct>},
         {path: '/dashboard/seller/myproduct', element: <SellerProduct></SellerProduct>},
-        {path: '/dashboard/purchase', element: <Purchase></Purchase>}
+        {path: '/dashboard/purchase', element: <Purchase></Purchase>},
+        {path: '/dashboard/purchase/:id', element: <Payment></Payment>,
+        loader: ({params}) => fetch(`http://localhost:5000/purchase/${params.id}`)
+      }
       ]
       },
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,
