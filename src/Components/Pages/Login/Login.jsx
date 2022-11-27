@@ -35,7 +35,6 @@ const Login = () => {
                 const errorMessage = error.message;
                 console.log(errorMessage);
             });
-        console.log(data);
     }
 
     const provider = new GoogleAuthProvider();
