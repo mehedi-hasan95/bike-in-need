@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 const CheckoutForm = ({ payment }) => {
 
-    const { sale, name, email, phone } = payment;
+    const { sale, name, email, phone, _id } = payment;
 
     const [cardError, setCardError] = useState('')
     const [clientSecret, setClientSecret] = useState("");
@@ -53,26 +53,45 @@ const CheckoutForm = ({ payment }) => {
 
         setSuccess('')
         setProcessing(true)
-        const {paymentIntent, confirmError} = await stripe.confirmCardPayment(
+        const { paymentIntent, confirmError } = await stripe.confirmCardPayment(
             clientSecret,
             {
-              payment_method: {
-                card: card,
-                billing_details: {
-                  name, email, phone
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name, email, phone
+                    },
                 },
-              },
             },
-          );
-          if(confirmError) {
+        );
+        if (confirmError) {
             setCardError(confirmError.message);
             return;
-          }
-          if (paymentIntent.status === "succeeded") {
-            setSuccess(`Congrats! ${name} for purchase`);
-            setTransictionId(paymentIntent.id)
         }
-        setProcessing(false) 
+        if (paymentIntent.status === "succeeded") {
+            const purchase = {
+                price: sale,
+                name, email, phone,
+                serviceId : _id,
+                paymentId: paymentIntent.id,
+            }
+
+            fetch('http://localhost:5000/confirm-purchase', {
+                method: 'POST', // or 'PUT'
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(purchase),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.insertedId) {
+                        setSuccess(`Congrats! ${name} for purchase`);
+                        setTransictionId(paymentIntent.id)
+                    }
+                })
+        }
+        setProcessing(false)
 
     };
     return (
