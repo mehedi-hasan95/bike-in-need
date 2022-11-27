@@ -1,12 +1,22 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../../AuthProvider/AuthProvider';
+import Lodding from '../../../Common/Lodding/Lodding';
 import ConformationModal from '../../../Modal/ConformationModal';
 import SellerPdDetails from './SellerPdDetails';
 
 const SellerProduct = () => {
+    const { user } = useContext(AuthContext);
 
+    const { data: sellerProducts, isLoading, refetch } = useQuery({
+        queryKey: ['sellers'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/seller/products?email=${user.email}`);
+            const data = await res.json();
+            return data;
+        }
+    })
     // Delete User
     const [deleteUser, setDeleteUser] = useState(null);
     const closeModal = () => {
@@ -24,7 +34,8 @@ const SellerProduct = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    toast.success(`You have sucessfully delete ${seller.name}`);                   
+                    toast.success(`You have sucessfully delete ${seller.name}`);      
+                    refetch();        
                 }
             })
     }
@@ -35,21 +46,28 @@ const SellerProduct = () => {
         setUpdateUser(null);
     }
 
-    const confirmUpdate = id => {
-        console.log(id);
+    const confirmUpdate = seller => {
+        fetch(`http://localhost:5000/seller/${seller._id}`, {
+            method: 'PUT', // or 'PUT'
+            headers: {
+                authorization: `bearar ${localStorage.getItem('appointmentToken')}`
+            }
+        })
+
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    console.log(data);
+                    toast.success(`You have sucessfully advatarised`);
+                }
+            })
     }
 
+    
+    if (isLoading) return <Lodding></Lodding>
 
-
-    const { user } = useContext(AuthContext);
-    const [sellerProducts, setSellerProducts] = useState([]);
-    useEffect(() => {
-        async function products() {
-            const allProduct = await axios.get(`http://localhost:5000/seller/products?email=${user.email}`)
-            setSellerProducts(allProduct.data)
-        }
-        products()
-    }, [user.email])
+    
+    
 
 
     return (
