@@ -16,6 +16,7 @@ const BookingModal = ({ treatment, setBookNow,   }) => {
 
 
         const booking = {
+            name: user.displayName,
             service: title,
             seller: treatment.name,
             phone, email,

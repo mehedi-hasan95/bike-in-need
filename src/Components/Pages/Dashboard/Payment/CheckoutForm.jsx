@@ -1,35 +1,45 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const CheckoutForm = ({pay}) => {
+const CheckoutForm = ({ payment }) => {
 
-    const {sale} = pay;
+    const { sale, name, email, phone } = payment;
 
     const [cardError, setCardError] = useState('')
+    const [clientSecret, setClientSecret] = useState("");
+    const [success, setSuccess] = useState("");
+    const [transictionId, setTransictionId] = useState("");
+    const [processing, setProcessing] = useState(false);
 
     const stripe = useStripe();
     const elements = useElements();
 
+
+    useEffect(() => {
+        fetch("http://localhost:5000/create-payment-intent", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ sale }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setClientSecret(data.clientSecret)
+            });
+    }, [sale]);
+
     const handleSubmit = async (event) => {
-        // Block native form submission.
         event.preventDefault();
 
         if (!stripe || !elements) {
-            // Stripe.js has not loaded yet. Make sure to disable
-            // form submission until Stripe.js has loaded.
             return;
         }
 
-        // Get a reference to a mounted CardElement. Elements knows how
-        // to find your CardElement because there can only ever be one of
-        // each type of element.
         const card = elements.getElement(CardElement);
 
         if (card == null) {
             return;
         }
 
-        // Use your card Element with other Stripe.js APIs
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: 'card',
             card,
@@ -40,6 +50,30 @@ const CheckoutForm = ({pay}) => {
         } else {
             setCardError('')
         }
+
+        setSuccess('')
+        setProcessing(true)
+        const {paymentIntent, confirmError} = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+              payment_method: {
+                card: card,
+                billing_details: {
+                  name, email, phone
+                },
+              },
+            },
+          );
+          if(confirmError) {
+            setCardError(confirmError.message);
+            return;
+          }
+          if (paymentIntent.status === "succeeded") {
+            setSuccess(`Congrats! ${name} for purchase`);
+            setTransictionId(paymentIntent.id)
+        }
+        setProcessing(false) 
+
     };
     return (
         <form onSubmit={handleSubmit}>
@@ -59,10 +93,16 @@ const CheckoutForm = ({pay}) => {
                     },
                 }}
             />
-            <button className='btn btn-primary btn-sm mt-5' type="submit" disabled={!stripe}>
+            <button className='btn btn-primary btn-sm mt-5' type="submit" disabled={!stripe || !clientSecret || processing}>
                 Pay
             </button>
             {cardError && <p className='text-red-500'>{cardError}</p>}
+            {
+                success && <div className='mt-4'>
+                    <p className='text-green-500'>{success}</p>
+                    <p>Transiction Id is: <span className='font-bold'>{transictionId}</span></p>
+                </div>
+            }
         </form>
     );
 };
