@@ -2,7 +2,6 @@ import React from 'react';
 
 const SingleAdvertised = ({ ad, setBookNow }) => {
     const {img, sale, title} = ad;
-    console.log(ad);
     return (
         <div className="card w-96 bg-base-100 shadow-xl mt-10">
             <figure><img src={img} alt="Shoes" /></figure>

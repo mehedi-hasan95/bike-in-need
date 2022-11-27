@@ -82,7 +82,7 @@ const SellerProduct = () => {
             {
                 deleteUser && <ConformationModal
                     title={'Do you want to delete the user?'}
-                    message={`If you want to remove ${deleteUser.name}, please confirm Delete`}
+                    message={`If you want to remove ${deleteUser.title}, please confirm Delete`}
                     successModal="Delete"
                     closeModal={closeModal}
                     userData={deleteUser}
@@ -94,9 +94,9 @@ const SellerProduct = () => {
             {/* Delete User  */}
             {
                 updateUser && <ConformationModal
-                    title={'Do you want to Update the user?'}
-                    message={`If you want to Update ${updateUser.name}, please confirm`}
-                    successModal="Update"
+                    title={'Do you want to Advertised the product?'}
+                    message={`If you want to advertised, please confirm`}
+                    successModal="Advertised"
                     closeModal={updateModal}
                     userData={updateUser}
                     confirmDelete={confirmUpdate}

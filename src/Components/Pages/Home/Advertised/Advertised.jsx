@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import Lodding from '../../Common/Lodding/Lodding';
 import SingleAdvertised from './SingleAdvertised';
 import BookingModal from '../../Modal/BookingModal';
+import Lodding from '../../Common/Lodding/Lodding';
 
 const Advertised = () => {
     const { data: advertised, isLoading, refetch } = useQuery({
@@ -23,9 +23,10 @@ const Advertised = () => {
     return (
         <div className='container mx-auto mt-16'>
             {
-                advertised.length > 0 && <div>
+                advertised.length > 0 &&
+                <div>
                     <h2 className='text-center text-rose-500 font-semibold text-2xl'>This is Advertised Product</h2>
-                    <div className="gird grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         {
                             advertised.map(ad => <SingleAdvertised setBookNow={setBookNow} key={ad._id} ad={ad}></SingleAdvertised>)
                         }
