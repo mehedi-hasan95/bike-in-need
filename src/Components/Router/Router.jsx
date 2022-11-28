@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
+import Blog from "../Pages/Blog/Blog";
 import Buyers from "../Pages/Dashboard/Admin/buyer/Buyers";
 import Purchase from "../Pages/Dashboard/Admin/buyer/Purchase/Purchase";
 import Sellers from "../Pages/Dashboard/Admin/Seller/Sellers";
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       element: <Main></Main>,
       children: [
         {path: '/', element: <Home></Home>},
+        {path: 'blog', element: <Blog></Blog>},
         {path: 'dashboard', element: <PrivetRouter><Dashboard></Dashboard></PrivetRouter>,
       children: [
         {path: '/dashboard/admin/seller', element: <Sellers></Sellers>},
