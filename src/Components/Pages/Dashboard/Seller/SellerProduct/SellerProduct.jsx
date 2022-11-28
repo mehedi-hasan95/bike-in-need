@@ -27,7 +27,7 @@ const SellerProduct = () => {
         fetch(`http://localhost:5000/seller/${seller._id}`, {
             method: 'DELETE', // or 'PUT'
             headers: {
-                authorization: `bearar ${localStorage.getItem('appointmentToken')}`
+                authorization: `bearar ${localStorage.getItem('accessToken')}`
             }
         })
 
@@ -57,7 +57,6 @@ const SellerProduct = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    console.log(data);
                     toast.success(`You have sucessfully advatarised`);
                 }
             })

@@ -25,7 +25,7 @@ const Buyers = () => {
         fetch(`http://localhost:5000/users/${buyer._id}`, {
             method: 'DELETE', // or 'PUT'
             headers: {
-                authorization: `bearar ${localStorage.getItem('appointmentToken')}`
+                authorization: `bearar ${localStorage.getItem('accessToken')}`
             }
         })
 

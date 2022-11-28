@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 const PurchaseItem = ({ product }) => {
     const {img, service, sale, _id} = product;
-    console.log(product);
     return (
         <div className="card w-96 bg-base-100 shadow-xl">
             <figure><img src={img} alt={service} /></figure>

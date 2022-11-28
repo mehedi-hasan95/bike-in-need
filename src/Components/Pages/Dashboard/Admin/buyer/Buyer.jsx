@@ -2,7 +2,6 @@ import React from 'react';
 
 const Buyer = ({ slr, idx, setDeleteUser }) => {
     const { name, email } = slr;
-    console.log(slr);
     return (
         <tr>
             <th>{idx + 1}</th>
