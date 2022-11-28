@@ -4,20 +4,14 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
-import useToken from '../../Hooks/useToken';
 
 const Register = () => {
     const { createUser, updateUser, googleLogin } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const [error, setError] = useState(null);
-    const [createdUserEmail, setCreatedUserEmail] = useState('')
-    const [token] = useToken(createdUserEmail);
     const navigate = useNavigate();
 
-    // Implement JWT
-    if(token) {
-        navigate('/');
-    }
+    
 
     const onSubmit = data => {
         setError('')
@@ -56,11 +50,20 @@ const Register = () => {
     })
         .then((response) => response.json())
         .then((data) => {
-            setCreatedUserEmail(email);
+            getUserToken(email)
         })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+    }
+
+    // get the JWT Token 
+    const getUserToken = email => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.token) {
+                localStorage.setItem('accessToken', data.token);
+                navigate('/')
+            }
+        })
     }
 
     // Login with google 

@@ -1,11 +1,12 @@
 import { GoogleAuthProvider } from 'firebase/auth';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
 
 const Login = () => {
 
+    const [error, setError] = useState(null)
     const { logIn, googleLogin } = useContext(AuthContext);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const navigate = useNavigate();
@@ -24,12 +25,24 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                navigate(from, { replace: true });
+                getUserToken(data.email);
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                console.log(errorMessage);
+                setError(errorMessage)
             });
+    }
+
+    // get the JWT Token 
+    const getUserToken = email => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+        .then(res => res.json())
+        .then(data => {
+            if(data.token) {
+                localStorage.setItem('accessToken', data.token);
+                navigate(from, { replace: true });
+            }
+        })
     }
 
     const provider = new GoogleAuthProvider();
@@ -57,6 +70,9 @@ const Login = () => {
                         <input {...register("password", { required: "Password is required" })} type="password" name="password" placeholder="Password" className="w-full px-4 py-3 rounded-md text-black" />
                     </div>
                     {errors.password && <p className='text-red-500' role="alert">{errors.password?.message}</p>}
+                    {
+                        error && <p className='text-red-500'>{error}</p>
+                    }
                     <button className="block w-full p-3 text-center rounded-sm text-gray-900 bg-violet-400">Sign in</button>
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
