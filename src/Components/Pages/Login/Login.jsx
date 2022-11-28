@@ -1,9 +1,8 @@
 import { GoogleAuthProvider } from 'firebase/auth';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../AuthProvider/AuthProvider';
-import useToken from '../../Hooks/useToken';
 
 const Login = () => {
 
@@ -14,14 +13,10 @@ const Login = () => {
     const from = location.state?.from?.pathname || "/";
 
 
-   // JWT Handle
-   const [loginUserEmail, setLoginUserEmail] = useState('');
-   const [token] = useToken(loginUserEmail)
+   
 
 
-   if(token) {
-       navigate(from, { replace: true });
-   }
+   
 
 
     const onSubmit = data => {
@@ -29,7 +24,7 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                setLoginUserEmail(data.email)
+                navigate(from, { replace: true });
             })
             .catch((error) => {
                 const errorMessage = error.message;
