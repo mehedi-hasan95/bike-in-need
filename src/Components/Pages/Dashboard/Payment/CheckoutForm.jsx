@@ -16,7 +16,7 @@ const CheckoutForm = ({ payment }) => {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://bike-in-need-server.vercel.app/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ sale }),
@@ -76,7 +76,7 @@ const CheckoutForm = ({ payment }) => {
                 paymentId: paymentIntent.id,
             }
 
-            fetch('http://localhost:5000/confirm-purchase', {
+            fetch('https://bike-in-need-server.vercel.app/confirm-purchase', {
                 method: 'POST', // or 'PUT'
                 headers: {
                     'Content-Type': 'application/json',

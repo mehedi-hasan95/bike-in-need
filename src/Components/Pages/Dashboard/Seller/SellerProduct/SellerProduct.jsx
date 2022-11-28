@@ -12,7 +12,7 @@ const SellerProduct = () => {
     const { data: sellerProducts, isLoading, refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/seller/products?email=${user.email}`);
+            const res = await fetch(`https://bike-in-need-server.vercel.app/seller/products?email=${user.email}`);
             const data = await res.json();
             return data;
         }
@@ -24,7 +24,7 @@ const SellerProduct = () => {
     }
 
     const confirmDelete = seller => {
-        fetch(`http://localhost:5000/seller/${seller._id}`, {
+        fetch(`https://bike-in-need-server.vercel.app/seller/${seller._id}`, {
             method: 'DELETE', // or 'PUT'
             headers: {
                 authorization: `bearar ${localStorage.getItem('accessToken')}`
@@ -47,7 +47,7 @@ const SellerProduct = () => {
     }
 
     const confirmUpdate = seller => {
-        fetch(`http://localhost:5000/seller/${seller._id}`, {
+        fetch(`https://bike-in-need-server.vercel.app/seller/${seller._id}`, {
             method: 'PATCH', // or 'PUT'
             headers: {
                 authorization: `bearar ${localStorage.getItem('appointmentToken')}`

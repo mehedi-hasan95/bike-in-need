@@ -7,7 +7,7 @@ const Categories = () => {
     const { data: categories, isLoading } = useQuery({
         queryKey: ['categories'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/categories`, {
+            const res = await fetch(`https://bike-in-need-server.vercel.app/categories`, {
                 headers: {
                     authorization: `bearer ${localStorage.getItem('accessToken')}`
                 },

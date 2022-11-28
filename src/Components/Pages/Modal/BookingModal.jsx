@@ -25,7 +25,7 @@ const BookingModal = ({ treatment, setBookNow,   }) => {
         }
 
 
-        fetch('http://localhost:5000/purchase', {
+        fetch('https://bike-in-need-server.vercel.app/purchase', {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',

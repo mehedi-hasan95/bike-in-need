@@ -41,7 +41,7 @@ const AddProduct = () => {
                         seller: user.email,
                         img: imgData.data.url
                     }
-                    fetch('http://localhost:5000/products/add', {
+                    fetch('https://bike-in-need-server.vercel.app/products/add', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

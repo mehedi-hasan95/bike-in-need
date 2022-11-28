@@ -35,7 +35,7 @@ const Login = () => {
 
     // get the JWT Token 
     const getUserToken = email => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
+        fetch(`https://bike-in-need-server.vercel.app/jwt?email=${email}`)
         .then(res => res.json())
         .then(data => {
             if(data.token) {

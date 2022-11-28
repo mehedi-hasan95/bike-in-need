@@ -30,12 +30,12 @@ const router = createBrowserRouter([
         {path: '/dashboard/seller/myproduct', element: <SellerProduct></SellerProduct>},
         {path: '/dashboard/purchase', element: <Purchase></Purchase>},
         {path: '/dashboard/purchase/:id', element: <Payment></Payment>,
-        loader: ({params}) => fetch(`http://localhost:5000/purchase/${params.id}`)
+        loader: ({params}) => fetch(`https://bike-in-need-server.vercel.app/purchase/${params.id}`)
       }
       ]
       },
         {path: 'categories/:category', element: <PrivetRouter><SingleCategory></SingleCategory></PrivetRouter>,
-        loader: ({params}) => fetch(`http://localhost:5000/categories/${params.category}`)
+        loader: ({params}) => fetch(`https://bike-in-need-server.vercel.app/categories/${params.category}`)
       },
         {path: 'login', element: <Login></Login>},
         {path: 'register', element: <Register></Register>},

@@ -8,7 +8,7 @@ const Purchase = () => {
     const [purchaseProducts, setPurchaseProducts] = useState([]);
     useEffect(() => {
         async function products() {
-            const allProduct = await axios.get(`http://localhost:5000/purchase?email=${user.email}`)
+            const allProduct = await axios.get(`https://bike-in-need-server.vercel.app/purchase?email=${user.email}`)
             setPurchaseProducts(allProduct.data)
         }
         products()

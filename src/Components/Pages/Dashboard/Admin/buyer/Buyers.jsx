@@ -9,7 +9,7 @@ const Buyers = () => {
     const { data: buyers, isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/users/buyer`);
+            const res = await fetch(`https://bike-in-need-server.vercel.app/users/buyer`);
             const data = await res.json();
             return data;
         }
@@ -22,7 +22,7 @@ const Buyers = () => {
         setDeleteUser(null);
     }
     const confirmDelete = buyer => {
-        fetch(`http://localhost:5000/users/${buyer._id}`, {
+        fetch(`https://bike-in-need-server.vercel.app/users/${buyer._id}`, {
             method: 'DELETE', // or 'PUT'
             headers: {
                 authorization: `bearar ${localStorage.getItem('accessToken')}`

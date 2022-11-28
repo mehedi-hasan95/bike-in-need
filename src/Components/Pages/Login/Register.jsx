@@ -41,7 +41,7 @@ const Register = () => {
     // Send datA to the DB
     const sendUser = (name, email, status) => {
         const user = {name, email, status};
-        fetch('http://localhost:5000/users', {
+        fetch('https://bike-in-need-server.vercel.app/users', {
         method: 'POST', // or 'PUT'
         headers: {
             'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const Register = () => {
 
     // get the JWT Token 
     const getUserToken = email => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
+        fetch(`https://bike-in-need-server.vercel.app/jwt?email=${email}`)
         .then(res => res.json())
         .then(data => {
             if(data.token) {
